@@ -18,9 +18,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Autenticação com Supabase e Google',
-      home: LoginScreen(),
+      theme: ThemeData(
+        colorSchemeSeed: const Color.fromARGB(255, 191, 243, 33),
+      ),
+      home: const LoginScreen(),
     );
   }
 }
