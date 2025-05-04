@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // Importar flutter_dotenv
+import 'package:flutter_dotenv/flutter_dotenv.dart'; 
 
 void main() async {
-  // Carregar variáveis de ambiente do .env
   await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Supabase Google Auth',
+      title: 'Autenticação com Supabase e Google',
       home: LoginScreen(),
     );
   }

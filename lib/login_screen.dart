@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart'; 
 import 'package:myapp/profile_screen.dart'; 
+import 'package:flutter_dotenv/flutter_dotenv.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -64,13 +65,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _nativeGoogleSignIn() async {
-    const webClientId = '249987982928-elmor03q36g9r0eibih4fcrh5fna7v4h.apps.googleusercontent.com';
-    const iosClientId = '249987982928-omum2tseq7mvdkedon7is0h1q7og6mpq.apps.googleusercontent.com';
+    final webClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID'];
+    final iosClientId = dotenv.env['GOOGLE_IOS_CLIENT_ID'];
+
+    // Verificar se os IDs foram carregados
+    if (webClientId == null || iosClientId == null) {
+       print('Erro: Client IDs do Google não encontrados no .env');
+       if (mounted) {
+         ScaffoldMessenger.of(context).showSnackBar(
+           const SnackBar(content: Text('Erro de configuração: Client IDs ausentes.'))
+         );
+       }
+       return;
+    }
 
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
-        clientId: iosClientId,
-        serverClientId: webClientId,
+        clientId: iosClientId, // Usar variável carregada
+        serverClientId: webClientId, // Usar variável carregada
       );
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
@@ -139,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ? null
               : 'io.supabase.flutterquickstart://login-callback/',
           onSuccess: (Session response) {
-            print('Sign in complete via button: ${response.user.id}');
+            print('Login completo via button: ${response.user.id}');
             _updateUserId(response.user.id);
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Login com Google bem-sucedido!')));

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'; // Importação adicionada
-import 'login_screen.dart'; // Importação adicionada (ajuste o caminho se necessário)
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'login_screen.dart'; 
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -8,8 +8,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Obter a instância do SupabaseClient
-    final supabase = Supabase.instance.client; // Linha adicionada
-
+    final supabase = Supabase.instance.client; 
     // Obter o usuário atual do Supabase
     final user = supabase.auth.currentUser;
     // Extrair metadados do usuário Google
