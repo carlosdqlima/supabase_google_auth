@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart'; 
-import 'package:myapp/profile_screen.dart'; 
+import 'package:myapp/screens/profile_screen.dart'; 
 import 'package:flutter_dotenv/flutter_dotenv.dart'; 
 
 class LoginScreen extends StatefulWidget {
