@@ -76,8 +76,7 @@ flutter run -d chrome --web-port 3000
 *   [Documentação Oficial do Supabase Flutter](https://supabase.com/docs/guides/getting-started/tutorials/with-flutter)
 *   [Guia de Autenticação OAuth do Supabase](https://supabase.com/docs/guides/auth/social-login/auth-google)
 *   [Pacote `supabase_flutter` no pub.dev](https://pub.dev/packages/supabase_flutter)
-*   [Pacote `google_sign_in` no pub.dev]
-(https://pub.dev/packages/google_sign_in)
+*   [Pacote `google_sign_in` no pub.dev](https://pub.dev/packages/google_sign_in)
 *   [Configuração do Google Cloud Console para OAuth 2.0](https://developers.google.com/identity/protocols/oauth2)
 *   [Exemplo Completo: Flutter Native Google Auth (Supabase GitHub)](https://github.com/supabase/supabase/tree/master/examples/auth/flutter-native-google-auth)
 *   [Artigo: Flutter Authentication (Supabase Blog)](https://supabase.com/blog/flutter-authentication)
