@@ -1,9 +1,10 @@
-import 'dart:io'; // Importação adicionada
-import 'package:flutter/foundation.dart'; // Importação adicionada
+import 'dart:io'; 
+import 'package:flutter/foundation.dart'; 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:supabase_auth_ui/supabase_auth_ui.dart'; // Importação adicionada
+import 'package:supabase_auth_ui/supabase_auth_ui.dart'; 
+import 'package:myapp/profile_screen.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,6 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
     _setupAuthListener();
     final initialSession = supabase.auth.currentSession;
     if (initialSession != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ProfileScreen()),
+          );
+        }
+      });
       _updateUserId(initialSession.user.id);
     }
   }
@@ -32,6 +41,12 @@ class _LoginScreenState extends State<LoginScreen> {
       final session = data.session;
       if (event == AuthChangeEvent.signedIn && session != null) {
         _updateUserId(session.user.id);
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ProfileScreen()),
+          );
+        }
       } else if (event == AuthChangeEvent.signedOut) {
         setState(() {
           userId = 'Não autenticado';
@@ -48,7 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // Renomeado de _googleSignIn para _nativeGoogleSignIn
   Future<void> _nativeGoogleSignIn() async {
     const webClientId = '249987982928-elmor03q36g9r0eibih4fcrh5fna7v4h.apps.googleusercontent.com';
     const iosClientId = '249987982928-omum2tseq7mvdkedon7is0h1q7og6mpq.apps.googleusercontent.com';
@@ -88,7 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // Novo método adicionado
   Future<void> handleGoogleSignIn() async {
     try {
       // Verificar se estamos na plataforma web ou mobile
@@ -98,9 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         // Implementação para web
         await supabase.auth.signInWithOAuth(
-          OAuthProvider.google, // Provider pode ser passado diretamente
-          // redirectTo é necessário para mobile deep linking, opcional para web se configurado no Supabase dashboard
-          redirectTo: kIsWeb ? null : 'io.supabase.flutterquickstart://login-callback/', // Ajuste o scheme se necessário
+          OAuthProvider.google, 
+          redirectTo: kIsWeb ? null : 'io.supabase.flutterquickstart://login-callback/',
         );
       }
     } catch (e) {
@@ -116,31 +128,27 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Login / Sign Up')),
-      body: Padding( // Adicionado Padding para melhor visualização
+      body: Padding( 
         padding: const EdgeInsets.all(16.0),
-        // Substituído SupaEmailAuth por SupaSocialsAuth focado no Google
         child: SupaSocialsAuth(
-          socialProviders: const [ // Apenas Google habilitado
+          socialProviders: const [
             OAuthProvider.google,
           ],
-          colored: true, // Usar botões coloridos
+          colored: true,
           redirectUrl: kIsWeb
               ? null
-              : 'io.supabase.flutterquickstart://login-callback/', // Ajuste o scheme se necessário
+              : 'io.supabase.flutterquickstart://login-callback/',
           onSuccess: (Session response) {
-            // Navegar ou mostrar mensagem de sucesso
-            print('Sign in complete: ${response.user.id}');
+            print('Sign in complete via button: ${response.user.id}');
             _updateUserId(response.user.id);
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Login com Google bem-sucedido!')));
-            // Exemplo: Navigator.of(context).pushReplacementNamed('/home');
           },
           onError: (error) {
             // Mostrar mensagem de erro
             print('Erro no login social: $error');
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Erro no login: ${error.toString()}')));
-            // Exemplo: Navigator.of(context).pushReplacementNamed('/error_page');
           },
         ),
       ),
