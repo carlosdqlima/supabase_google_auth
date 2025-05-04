@@ -52,10 +52,10 @@ Siga estas instruções para obter uma cópia do projeto em execução na sua m�
 
 ## Executando o Aplicativo
 
-Para executar o aplicativo em um emulador ou dispositivo conectado, use o comando:
+Para executar o aplicativo em um navegador Chrome na porta 3000, use o comando:
 
 ```bash
-flutter run
+flutter run -d chrome --web-port 3000
 ```
 
 ## Estrutura do Projeto
