@@ -29,5 +29,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Variável global para facilitar o acesso ao cliente Supabase
+// Variável global para facilitar o acesso ao cliente Supabase.
 final supabase = Supabase.instance.client;
+
